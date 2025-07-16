@@ -1,0 +1,6 @@
+.catalogPage {
+  display: flex;
+  margin: 48px 64px 52px 64px;
+  justify-content: space-between;
+  gap: 64px;
+}

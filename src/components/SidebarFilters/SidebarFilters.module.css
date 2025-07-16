@@ -1,0 +1,180 @@
+.sidebar {
+  width: 360px;
+  background-color: var(--white);
+  border-radius: 20px;
+  /* box-shadow: 0px 4px 32px 0px rgba(16, 24, 40, 0.08); */
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  /* padding: 32px 24px; */
+}
+
+.locationFilterBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--gray-light);
+  margin: 24px 0;
+}
+
+.filterBlock {
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+}
+
+.locationLabel {
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--gray);
+}
+
+.label {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--main);
+}
+
+.filtersTitle {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  margin-top: 40px;
+}
+
+.inputWithIcon {
+  position: relative;
+  width: 100%;
+}
+
+.inputIcon {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  color: var(--gray);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.input {
+  background-color: var(--inputs);
+  border-radius: 12px;
+  border: 1px solid var(--gray-light);
+  width: 360px;
+  height: 56px;
+  padding: 18px 18px;
+  padding-left: 44px; /* під іконку */
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--main);
+  outline: none;
+  transition: border 0.2s;
+}
+.input:focus {
+  border: 1px solid var(--button);
+}
+
+/* === Кастомні плитки-чекбокси і радіо === */
+.checkboxGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.checkboxTile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxTile input[type="checkbox"],
+.checkboxTile input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.checkboxBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 112px;
+  height: 96px;
+  padding: 0 32px;
+  border-radius: 12px;
+  border: 1px solid var(--gray-light);
+  background: var(--white);
+  gap: 8px;
+  transition: border 0.2s, background 0.2s;
+}
+
+.icon {
+  font-size: 32px;
+  color: var(--main);
+  transition: color 0.2s;
+}
+
+.text {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: var(--main);
+  transition: color 0.2s;
+}
+
+/* Активний стан (checked) */
+.checkboxTile input[type="checkbox"]:checked + .checkboxBox,
+.checkboxTile input[type="radio"]:checked + .checkboxBox {
+  border-color: var(--button);
+}
+
+.checkboxTile input[type="checkbox"]:checked + .checkboxBox .icon,
+.checkboxTile input[type="radio"]:checked + .checkboxBox .icon {
+  color: var(--button);
+}
+.checkboxTile input[type="checkbox"]:checked + .checkboxBox .text,
+.checkboxTile input[type="radio"]:checked + .checkboxBox .text {
+  color: var(--button);
+  font-weight: 700;
+}
+
+/* Кнопка пошуку */
+.searchBtn {
+  margin-top: 40px;
+  padding: 16px 60px;
+  width: 166px;
+  height: 56px;
+  border-radius: 200px;
+  border: none;
+  background: var(--button);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.searchBtn:hover,
+.searchBtn:focus {
+  background: var(--button-hover);
+}

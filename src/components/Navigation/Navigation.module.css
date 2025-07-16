@@ -1,0 +1,14 @@
+.nav {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.link {
+  text-align: center;
+}
+
+.active {
+  color: var(--button-hover);
+}

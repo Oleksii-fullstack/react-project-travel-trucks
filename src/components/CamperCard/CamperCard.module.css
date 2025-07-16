@@ -1,0 +1,201 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background-color: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(16, 24, 40, 0.05);
+  gap: 24px;
+  position: relative;
+  max-width: 888px;
+  height: 368px;
+}
+
+.image {
+  width: 292px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+  min-width: 0;
+  width: 524px;
+  height: 320px;
+}
+
+.headerBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-right: 37px;
+  position: relative;
+}
+
+.afterHeaderRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.33;
+  color: var(--main);
+  margin: 0;
+  flex: 1;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.33;
+  color: var(--main);
+}
+
+.iconHeart {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 24px;
+  color: var(--main);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.iconHeart:hover {
+  color: #d84343;
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.iconStar {
+  color: var(--rating);
+  font-size: 16px;
+}
+
+.ratingSpan {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: var(--main);
+}
+
+.locationRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.iconMap {
+  color: var(--main);
+  font-size: 16px;
+}
+
+.locationSpan {
+  color: var(--main);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.description {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.featuresRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 524px;
+  height: 104px;
+}
+
+.featuresRowSecondary {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.featuresBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--badges);
+  border-radius: 100px;
+  padding: 12px 18px;
+  height: 48px;
+}
+
+.iconFeatures {
+  font-size: 20px;
+  color: var(--main);
+}
+
+.featuresText {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--main);
+}
+
+.showMoreBtn {
+  background-color: var(--button);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  border: none;
+  border-radius: 200px;
+  padding: 16px 60px;
+  height: 56px;
+  width: fit-content;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.showMoreBtn:hover,
+.showMoreBtn:focus {
+  background-color: var(--button-hover);
+}
+
+/* ——— Mobile адаптація, якщо треба ——— */
+/* @media (max-width: 900px) {
+  .card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 18px;
+  }
+  .image {
+    width: 100%;
+    max-width: 380px;
+    height: 220px;
+    margin: 0 auto;
+  }
+} */
