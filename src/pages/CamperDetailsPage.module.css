@@ -1,0 +1,60 @@
+.tabsSection {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
+  position: relative;
+}
+
+.tabsWrapper {
+  position: relative;
+}
+
+.tabsWrapper::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--gray-light);
+  z-index: 1;
+}
+
+.tabs {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.tabLink,
+.tabLinkActive {
+  display: inline-block;
+  position: relative;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--main);
+  padding-bottom: 24px;
+  text-decoration: none;
+  opacity: 1;
+  transition: color 0.2s, opacity 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.tabLinkActive::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -1.5px;
+  height: 5px;
+  width: 100%;
+  background: var(--button);
+  z-index: 3;
+}

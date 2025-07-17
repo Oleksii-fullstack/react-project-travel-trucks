@@ -5,8 +5,9 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import CamperInfo from "../components/CamperInfo/CamperInfo";
 import { useEffect } from "react";
+import CamperInfo from "../components/CamperInfo/CamperInfo";
+import clsx from "clsx";
 import css from "./CamperDetailsPage.module.css";
 
 const CamperDetailsPage = () => {
@@ -23,18 +24,32 @@ const CamperDetailsPage = () => {
   return (
     <div className={css.detailsWrapper}>
       <CamperInfo />
-      <ul className={css.tabs}>
-        <li>
-          <NavLink to="features" className={css.tabLink}>
-            Features
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="reviews" className={css.tabLink}>
-            Reviews
-          </NavLink>
-        </li>
-      </ul>
+      <div className={css.tabsSection}>
+        <div className={css.tabsWrapper}>
+          <ul className={css.tabs}>
+            <li>
+              <NavLink
+                to="features"
+                className={({ isActive }) => {
+                  return clsx(css.tabLink, isActive && css.tabLinkActive);
+                }}
+              >
+                Features
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="reviews"
+                className={({ isActive }) => {
+                  return clsx(css.tabLink, isActive && css.tabLinkActive);
+                }}
+              >
+                Reviews
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      </div>
       <Outlet />
     </div>
   );

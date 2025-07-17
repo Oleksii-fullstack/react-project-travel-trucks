@@ -1,0 +1,29 @@
+.iconsGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 100px;
+}
+
+.iconTile {
+  display: flex;
+  /* align-items: center; */
+  gap: 8px;
+  background-color: var(--gray-light);
+  border-radius: 100px;
+  padding: 12px 18px;
+  width: fit-content;
+  height: 48px;
+}
+
+.icon {
+  font-size: 20px;
+  color: var(--main);
+}
+
+.label {
+  color: var(--main);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+}

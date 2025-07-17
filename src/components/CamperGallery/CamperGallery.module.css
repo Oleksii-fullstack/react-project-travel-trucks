@@ -1,0 +1,15 @@
+.gallery {
+  display: flex;
+  gap: 48px;
+}
+/* .gallery {
+  overflow-x: auto;
+} */
+
+.image {
+  width: 292px;
+  height: 312px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}

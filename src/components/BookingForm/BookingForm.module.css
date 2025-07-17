@@ -1,0 +1,91 @@
+.form {
+  border-radius: 10px;
+  border: 1px solid var(--gray-light);
+  width: 100%;
+  max-width: 641px;
+  height: 588px;
+  padding: 44px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.headerRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+  color: var(--main);
+}
+
+.title {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--gray);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.inputsBox {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.input,
+.textarea {
+  background-color: var(--inputs);
+  border: none;
+  border-radius: 12px;
+  padding: 18px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: inherit;
+  color: var(--main);
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border 0.2s;
+}
+
+.textarea {
+  border-radius: 10px;
+  min-height: 118px;
+  resize: none;
+  overflow-y: auto;
+}
+
+.input:focus,
+.textarea:focus {
+  border: 1px solid var(--button);
+}
+
+.button {
+  margin: 0 auto;
+  background-color: var(--button);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  border: none;
+  border-radius: 200px;
+  padding: 16px 60px;
+  height: 56px;
+  width: 166px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button:hover,
+.button:focus {
+  background-color: var(--button-hover);
+}
