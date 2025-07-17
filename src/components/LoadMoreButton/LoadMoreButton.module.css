@@ -1,0 +1,20 @@
+.loadMoreBtn {
+  border: 1px solid var(--gray-light);
+  border-radius: 200px;
+  padding: 16px 32px;
+  width: fit-content;
+  height: 56px;
+  margin-top: 40px;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: var(--main);
+  transition: border 0.2s;
+}
+
+.loadMoreBtn:hover,
+.loadMoreBtn:focus {
+  border: 1px solid var(--button-hover);
+}

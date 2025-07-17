@@ -1,6 +1,13 @@
 .catalogPage {
   display: flex;
-  margin: 48px 64px 52px 64px;
-  justify-content: space-between;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 48px 64px 52px 64px;
   gap: 64px;
+}
+
+.mainSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

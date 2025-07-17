@@ -1,0 +1,64 @@
+.headerBox {
+  display: flex;
+  flex-direction: column;
+  width: 1312px;
+}
+
+.headerTitle {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.33;
+  color: var(--main);
+  margin-bottom: 8px;
+}
+
+.underTitleBox {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.ratingRow {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.iconStar {
+  font-size: 16px;
+  color: var(--rating);
+}
+
+.ratingSpan {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: var(--main);
+}
+
+.locationRow {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.iconMap {
+  font-size: 16px;
+  color: var(--main);
+}
+
+.locationSpan {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--main);
+}
+
+.headerPrice {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.33;
+  color: var(--main);
+}

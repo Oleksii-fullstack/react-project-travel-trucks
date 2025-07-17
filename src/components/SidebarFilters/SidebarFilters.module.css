@@ -1,5 +1,5 @@
 .sidebar {
-  width: 360px;
+  max-width: 360px;
   background-color: var(--white);
   border-radius: 20px;
   /* box-shadow: 0px 4px 32px 0px rgba(16, 24, 40, 0.08); */
