@@ -3,7 +3,7 @@ import { fetchCamperById, fetchCampers } from "../../api/campersAPI";
 
 export const fetchCampersThunk = createAsyncThunk(
   "campers/fetchAll",
-  async (params, thunkAPI) => {
+  async (params = {}, thunkAPI) => {
     try {
       const data = await fetchCampers(params);
       return data;

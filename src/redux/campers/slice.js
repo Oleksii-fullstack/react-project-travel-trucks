@@ -3,15 +3,22 @@ import { fetchCampersThunk, fetchCamperByIdThunk } from "./operations";
 
 const initialState = {
   items: [],
-  current: null,
+  page: 1,
   isLoading: false,
   error: null,
+  total: 0,
 };
 
 const campersSlice = createSlice({
   name: "campers",
   initialState,
-  reducers: {},
+  reducers: {
+    resetCampers: (state) => {
+      state.items = [];
+      state.page = 1;
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCampersThunk.pending, (state) => {
@@ -21,7 +28,15 @@ const campersSlice = createSlice({
       .addCase(fetchCampersThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items = action.payload;
+        // action.meta.arg.page - це той page, який передаємо
+        if (action.meta.arg?.page && action.meta.arg.page > 1) {
+          state.items = [...state.items, ...action.payload.items];
+          state.page = action.meta.arg.page;
+        } else {
+          state.items = action.payload.items;
+          state.page = 1;
+        }
+        state.total = action.payload.total;
       })
       .addCase(fetchCampersThunk.rejected, (state, action) => {
         state.isLoading = false;
@@ -43,4 +58,5 @@ const campersSlice = createSlice({
   },
 });
 
+export const { resetCampers } = campersSlice.actions;
 export default campersSlice.reducer;
