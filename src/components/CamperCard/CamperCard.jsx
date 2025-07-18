@@ -1,66 +1,76 @@
 import { useNavigate } from "react-router-dom";
+import { featureMap } from "../../utils/featureMap";
 import { FaStar } from "react-icons/fa6";
+import { BsSuitHeart } from "react-icons/bs";
 import { ImMap2 } from "react-icons/im";
-import { BsSuitHeart, BsDiagram3, BsFuelPump, BsCupHot } from "react-icons/bs";
-import { LuWind } from "react-icons/lu";
 import css from "./CamperCard.module.css";
 
-const CamperCard = () => {
+const CamperCard = (props) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/catalog/:id");
   };
 
+  const MAX_FEATURES = 8;
+
+  const features = Object.entries(featureMap)
+    .filter(([key, cfg]) => cfg.condition(props[key]))
+    .map(([key, cfg]) => ({
+      Icon: cfg.icon,
+      label:
+        typeof cfg.label === "function" ? cfg.label(props[key]) : cfg.label,
+      key,
+    }));
+
+  const displayedFeatures = features.slice(0, MAX_FEATURES);
+  const hasMore = features.length > MAX_FEATURES;
+
   return (
     <div className={css.card}>
       <img
-        src="/src/assets/camper.jpg"
-        alt="camper truck image"
+        src={props.gallery[0]?.thumb || "/src/assets/noimage.jpg"}
+        alt={props.name}
         className={css.image}
       />
       <div className={css.info}>
         <div className={css.headerBox}>
           <div className={css.headerRow}>
-            <h2 className={css.title}>Kuga Camper</h2>
-            <span className={css.price}>€8000.00</span>
+            <h2 className={css.title}>{props.name}</h2>
+            <span className={css.price}>€{props.price}.00</span>
             <BsSuitHeart className={css.iconHeart} />
           </div>
 
           <div className={css.afterHeaderRow}>
             <div className={css.ratingRow}>
               <FaStar className={css.iconStar} />
-              <span className={css.ratingSpan}>4.2(10 Reviews)</span>
+              <span className={css.ratingSpan}>
+                {props.rating}({props.reviews?.length || 0} Reviews)
+              </span>
             </div>
             <div className={css.locationRow}>
               <ImMap2 className={css.iconMap} />
-              <span className={css.locationSpan}>Kyiv, Ukraine</span>
+              <span className={css.locationSpan}>{props.location}</span>
             </div>
           </div>
         </div>
 
-        <p className={css.description}>
-          The pictures shown here are example vehicles of the respective...
-        </p>
+        <p className={css.description}>{props.description}</p>
         <div className={css.featuresRow}>
-          <span className={css.featuresBox}>
-            <BsDiagram3 className={css.iconFeatures} />
-            <span className={css.featuresText}>Automatic</span>
-          </span>
-          <span className={css.featuresBox}>
-            <BsFuelPump className={css.iconFeatures} />
-            <span className={css.featuresText}>Petrol</span>
-          </span>
-          <span className={css.featuresBox}>
-            <BsCupHot className={css.iconFeatures} />
-            <span className={css.featuresText}>Kitchen</span>
-          </span>
-          <div className={css.featuresRowSecondary}>
-            <span className={css.featuresBox}>
-              <LuWind className={css.iconFeatures} />
-              <span className={css.featuresText}>AC</span>
+          {displayedFeatures.map(({ Icon, label, key }) => (
+            <span key={key} className={css.featuresBox}>
+              <Icon className={css.iconFeatures} />
+              <span className={css.featuresText}>{label}</span>
             </span>
-          </div>
+          ))}
+          {hasMore && (
+            <span
+              className={css.featuresBox}
+              style={{ fontWeight: 700, fontSize: 20 }}
+            >
+              ...
+            </span>
+          )}
         </div>
         <button className={css.showMoreBtn} type="button" onClick={handleClick}>
           Show more
