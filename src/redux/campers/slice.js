@@ -1,12 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCampersThunk, fetchCamperByIdThunk } from "./operations";
+import {
+  fetchCampersThunk,
+  fetchCamperByIdThunk,
+  fetchCampersByIdsThunk,
+} from "./operations";
 
 const initialState = {
   items: [],
+  cache: {},
+  total: 0,
   page: 1,
   isLoading: false,
   error: null,
-  total: 0,
+  current: null,
 };
 
 const campersSlice = createSlice({
@@ -16,6 +22,7 @@ const campersSlice = createSlice({
     resetCampers: (state) => {
       state.items = [];
       state.page = 1;
+      state.total = 0;
       state.error = null;
     },
   },
@@ -37,6 +44,10 @@ const campersSlice = createSlice({
           state.page = 1;
         }
         state.total = action.payload.total;
+        // Додаємо у кеш ВСІ campers з payload.items
+        action.payload.items.forEach((camper) => {
+          state.cache[camper.id] = camper;
+        });
       })
       .addCase(fetchCampersThunk.rejected, (state, action) => {
         state.isLoading = false;
@@ -50,10 +61,23 @@ const campersSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.current = action.payload;
+        if (action.payload && action.payload.id) {
+          state.cache[action.payload.id] = action.payload;
+        }
       })
       .addCase(fetchCamperByIdThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
+      })
+      .addCase(fetchCampersByIdsThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        // action.payload — масив camper-ів
+        state.items = action.payload;
+        state.total = action.payload.length;
+        action.payload.forEach((camper) => {
+          state.cache[camper.id] = camper;
+        });
       });
   },
 });

@@ -85,6 +85,11 @@
   color: #d84343;
 }
 
+.iconHeart.favActive {
+  color: red;
+  fill: red;
+}
+
 .ratingRow {
   display: flex;
   align-items: center;

@@ -11,3 +11,10 @@ export const fetchCamperById = async (id) => {
   const response = await axios.get(`${BASE_URL}/${id}`);
   return response.data;
 };
+
+export const fetchCampersByIds = async (ids) => {
+  if (!ids.length) return [];
+  const params = ids.map((id) => `id=${id}`).join("&");
+  const response = await axios.get(`${BASE_URL}?${params}`);
+  return response.data;
+};

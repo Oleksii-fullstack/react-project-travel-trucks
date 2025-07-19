@@ -1,15 +1,30 @@
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleFavorite } from "../../redux/favorites/slice";
 import { featureMap } from "../../utils/featureMap";
 import { FaStar } from "react-icons/fa6";
 import { BsSuitHeart } from "react-icons/bs";
 import { ImMap2 } from "react-icons/im";
+import toast from "react-hot-toast";
 import css from "./CamperCard.module.css";
 
 const CamperCard = (props) => {
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites.items);
+  const isFav = favorites.includes(props.id);
+
   const handleClick = () => {
-    navigate("/catalog/:id");
+    navigate(`/catalog/${props.id}`);
+  };
+
+  const handleFavClick = () => {
+    dispatch(toggleFavorite(props.id));
+    toast(isFav ? "Видалено з улюблених!" : "Додано до улюблених!", {
+      icon: isFav ? "💔" : "❤️",
+      style: { background: "#fff", color: "#222" },
+    });
   };
 
   const MAX_FEATURES = 8;
@@ -29,7 +44,7 @@ const CamperCard = (props) => {
   return (
     <div className={css.card}>
       <img
-        src={props.gallery[0]?.thumb || "/src/assets/noimage.jpg"}
+        src={props.gallery?.[0]?.thumb || "/src/assets/noimage.jpg"}
         alt={props.name}
         className={css.image}
       />
@@ -38,7 +53,14 @@ const CamperCard = (props) => {
           <div className={css.headerRow}>
             <h2 className={css.title}>{props.name}</h2>
             <span className={css.price}>€{props.price}.00</span>
-            <BsSuitHeart className={css.iconHeart} />
+            <BsSuitHeart
+              className={`${css.iconHeart} ${isFav ? css.favActive : ""}`}
+              onClick={handleFavClick}
+              tabIndex={0}
+              title={isFav ? "Видалити з улюблених" : "Додати до улюблених"}
+              aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
+              style={{ cursor: "pointer" }}
+            />
           </div>
 
           <div className={css.afterHeaderRow}>

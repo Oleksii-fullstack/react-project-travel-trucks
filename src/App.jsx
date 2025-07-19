@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { Toaster } from "react-hot-toast";
 import AppHeader from "./components/AppHeader/AppHeader";
 import CamperFeatures from "./components/CamperFeatures/CamperFeatures";
 import CamperReviews from "./components/CamperReviews/CamperReviews";
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
+      <Toaster position="top-right" />
     </>
   );
 };

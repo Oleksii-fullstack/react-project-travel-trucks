@@ -13,6 +13,8 @@ const SidebarFilters = ({
   onVehicleTypeDraftChange,
   onFilterChange,
   onSubmit,
+  showFavorites,
+  onShowFavoritesChange,
 }) => {
   // Debounced location live-search
   const [locationDraft, setLocationDraft] = useState(filters.location || "");
@@ -22,6 +24,7 @@ const SidebarFilters = ({
   useEffect(() => {
     if (debouncedLocation !== filters.location) {
       onFilterChange({ ...filters, location: debouncedLocation });
+      onSubmit(); // автоматично сабмітити після debounce location
     }
     // eslint-disable-next-line
   }, [debouncedLocation]);
@@ -59,6 +62,20 @@ const SidebarFilters = ({
         </div>
 
         <p className={css.filtersTitle}>Filters</p>
+
+        {/* Show only favourites */}
+        <div className={css.favCheckboxWrapper}>
+          <label className={css.favCheckboxLabel}>
+            <input
+              type="checkbox"
+              checked={showFavorites}
+              onChange={(e) => onShowFavoritesChange(e.target.checked)}
+              className={css.favCheckboxInput}
+            />
+            Show only favourites
+          </label>
+        </div>
+
         {/* Vehicle equipment */}
         <div className={css.filterBlock}>
           <p className={css.label}>Vehicle equipment</p>
