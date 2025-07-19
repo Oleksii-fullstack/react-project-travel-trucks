@@ -21,7 +21,7 @@ const CamperCard = (props) => {
 
   const handleFavClick = () => {
     dispatch(toggleFavorite(props.id));
-    toast(isFav ? "Видалено з улюблених!" : "Додано до улюблених!", {
+    toast(isFav ? "Removed from favourites!" : "Added to favourites!", {
       icon: isFav ? "💔" : "❤️",
       style: { background: "#fff", color: "#222" },
     });
@@ -57,7 +57,7 @@ const CamperCard = (props) => {
               className={`${css.iconHeart} ${isFav ? css.favActive : ""}`}
               onClick={handleFavClick}
               tabIndex={0}
-              title={isFav ? "Видалити з улюблених" : "Додати до улюблених"}
+              title={isFav ? "Remove from favorites" : "Add to favorites"}
               aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
               style={{ cursor: "pointer" }}
             />

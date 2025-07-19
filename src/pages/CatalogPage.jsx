@@ -5,11 +5,9 @@ import {
   selectLoading,
   selectError,
 } from "../redux/campers/selectors";
-import {
-  fetchCampersThunk,
-  fetchCampersByIdsThunk,
-} from "../redux/campers/operations";
+import { fetchCampersThunk } from "../redux/campers/operations";
 import { resetCampers } from "../redux/campers/slice";
+import { filterCampers } from "../utils/filterCampers";
 import CampersList from "../components/CampersList/CampersList";
 import LoadMoreButton from "../components/LoadMoreButton/LoadMoreButton";
 import SidebarFilters from "../components/SidebarFilters/SidebarFilters";
@@ -30,6 +28,8 @@ const CatalogPage = () => {
   const error = useSelector(selectError);
   const favorites = useSelector((state) => state.favorites.items);
   const campersCache = useSelector((state) => state.campers.cache);
+  const hasRequested = useSelector((state) => state.campers.hasRequested);
+  const notFound = useSelector((state) => state.campers.notFound);
 
   const [filters, setFilters] = useState({
     location: "",
@@ -99,15 +99,18 @@ const CatalogPage = () => {
     // eslint-disable-next-line
   }, [page, filters, showFavorites]);
 
-  // Коли showFavorites true — формуємо видимі campers по кешу:
+  // Фільтрація favorites
   const favoritesCampers = favorites
     .map((id) => campersCache[id])
     .filter(Boolean);
 
-  // const visibleCampers = showFavorites
-  //   ? (campers.items || []).filter((c) => favorites.includes(c.id))
-  //   : campers.items || [];
-  const visibleCampers = showFavorites ? favoritesCampers : campers.items || [];
+  const visibleCampers = showFavorites
+    ? filterCampers(favoritesCampers, {
+        ...filters,
+        vehicleType:
+          VEHICLE_TYPE_MAP[filters.vehicleType] || filters.vehicleType,
+      })
+    : campers.items || [];
 
   const handleLoadMore = () => {
     setPage((prev) => prev + 1);
@@ -132,6 +135,8 @@ const CatalogPage = () => {
           campers={visibleCampers}
           isLoading={isLoading}
           error={error}
+          hasRequested={hasRequested}
+          notFound={notFound}
         />
         {showFavorites
           ? null // Якщо в режимі favorites — LoadMore не потрібен

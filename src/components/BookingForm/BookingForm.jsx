@@ -1,8 +1,28 @@
+import { useForm, Controller } from "react-hook-form";
+import DatePicker from "react-datepicker";
+import { toast } from "react-hot-toast";
+import "react-datepicker/dist/react-datepicker.css";
 import css from "./BookingForm.module.css";
+import calendarCss from "./CustomCalendar.module.css";
+
+const today = new Date();
 
 const BookingForm = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    toast.success("Booking submitted successfully! 🚐");
+    reset();
+  };
+
   return (
-    <form className={css.form}>
+    <form className={css.form} onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className={css.headerRow}>
         <h3 className={css.title}>Book your campervan now</h3>
         <p className={css.subtitle}>
@@ -14,32 +34,125 @@ const BookingForm = () => {
           className={css.input}
           type="text"
           placeholder="Name*"
-          required
-          name="name"
+          {...register("name", {
+            required: "Name is required",
+            minLength: { value: 2, message: "Name too short" },
+            pattern: {
+              value: /^[a-zA-Zа-яА-ЯіІїЇєЄґҐ'\s-]+$/,
+              message: "Name can only contain letters",
+            },
+          })}
         />
+        {errors.name && <span className={css.err}>{errors.name.message}</span>}
+
         <input
           className={css.input}
           type="email"
           placeholder="Email*"
-          required
-          name="email"
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value:
+                /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/,
+              message: "Invalid email address",
+            },
+          })}
         />
-        <input
-          className={css.input}
-          type="text"
-          placeholder="Booking date*"
-          required
+        {errors.email && (
+          <span className={css.err}>{errors.email.message}</span>
+        )}
+
+        {/* Booking date */}
+        <Controller
+          control={control}
           name="date"
+          render={({ field }) => (
+            <DatePicker
+              placeholderText="Booking date*"
+              selected={field.value}
+              onChange={field.onChange}
+              minDate={new Date()}
+              calendarClassName={calendarCss.customCalendar}
+              dateFormat="dd.MM.yyyy"
+              showPopperArrow={false}
+              autoComplete="off"
+              className={`${css.input} ${errors.date ? css.inputErr : ""}`}
+              {...field}
+              renderCustomHeader={({
+                monthDate,
+                decreaseMonth,
+                increaseMonth,
+              }) => (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: 6,
+                  }}
+                >
+                  <button
+                    onClick={decreaseMonth}
+                    type="button"
+                    style={{
+                      background: "none",
+                      border: "none",
+                      fontSize: 22,
+                      padding: "0 16px 0 0",
+                      color: "#2d264b",
+                      cursor: "pointer",
+                      outline: "none",
+                    }}
+                    aria-label="Previous month"
+                  >
+                    &#8592;
+                  </button>
+                  <span
+                    style={{
+                      fontWeight: 600,
+                      fontSize: 19,
+                      flex: 1,
+                      textAlign: "center",
+                      color: "#22223f",
+                    }}
+                  >
+                    {monthDate.toLocaleString("en-US", {
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </span>
+                  <button
+                    onClick={increaseMonth}
+                    type="button"
+                    style={{
+                      background: "none",
+                      border: "none",
+                      fontSize: 22,
+                      padding: "0 0 0 16px",
+                      color: "#2d264b",
+                      cursor: "pointer",
+                      outline: "none",
+                    }}
+                    aria-label="Next month"
+                  >
+                    &#8594;
+                  </button>
+                </div>
+              )}
+            />
+          )}
         />
+        {errors.date && <span className={css.err}>{errors.date.message}</span>}
+
         <textarea
           className={css.textarea}
           placeholder="Comment"
-          name="comment"
+          {...register("comment")}
           rows={3}
         />
       </div>
-      <button type="submit" className={css.button}>
-        Send
+      <button type="submit" className={css.button} disabled={isSubmitting}>
+        {isSubmitting ? "Sending..." : "Send"}
       </button>
     </form>
   );

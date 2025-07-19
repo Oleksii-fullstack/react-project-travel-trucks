@@ -12,12 +12,19 @@ export const fetchCampersThunk = createAsyncThunk(
       const data = await fetchCampers(params);
       return data;
     } catch (error) {
-      if (error.response && error.response.status === 404) {
-        // Якщо бекенд повернув 404 і ми викликаємо колекцію кемперів — вважаємо це "немає результатів"
-        return { items: [], total: 0 };
+      if (
+        error.response &&
+        error.response.status === 404 &&
+        error.config.url &&
+        error.config.url.includes("/campers")
+      ) {
+        // Якщо це 404 і запит саме до колекції campers — «нічого не знайдено»
+        return { items: [], total: 0, notFound: true };
       }
-      // В інших випадках — звичайна помилка
-      return thunkAPI.rejectWithValue(error.message);
+      // Інші помилки — реальна помилка
+      return thunkAPI.rejectWithValue(
+        error.message || "Something went wrong. Please try again later."
+      );
     }
   }
 );

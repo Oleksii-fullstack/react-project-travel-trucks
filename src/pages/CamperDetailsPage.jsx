@@ -5,7 +5,9 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { fetchCamperByIdThunk } from "../redux/campers/operations";
 import CamperInfo from "../components/CamperInfo/CamperInfo";
 import clsx from "clsx";
 import css from "./CamperDetailsPage.module.css";
@@ -14,16 +16,34 @@ const CamperDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
+  const camper =
+    useSelector((state) => state.campers.cache[id]) ||
+    useSelector((state) => state.campers.current);
+
+  const isLoading = useSelector((state) => state.campers.isLoading);
+  const error = useSelector((state) => state.campers.error);
+
+  // Завантажити camper якщо нема в кеші або не той
   useEffect(() => {
-    if (location.pathname === `/catalog/${id}`) {
-      navigate(`features`, { replace: true });
+    if (!camper || camper.id !== id) {
+      dispatch(fetchCamperByIdThunk(id));
     }
-  }, [id, location.pathname, navigate]);
+    // Redirect на features-tab, якщо на /catalog/:id
+    if (location.pathname === `/catalog/${id}`) {
+      navigate("features", { replace: true });
+    }
+    // eslint-disable-next-line
+  }, [id, location.pathname]);
+
+  if (isLoading) return <div className={css.loader}>Loading...</div>;
+  if (error) return <div className={css.error}>{error}</div>;
+  if (!camper) return null; // Поки дані не отримані
 
   return (
     <div className={css.detailsWrapper}>
-      <CamperInfo />
+      <CamperInfo camper={camper} />
       <div className={css.tabsSection}>
         <div className={css.tabsWrapper}>
           <ul className={css.tabs}>
@@ -50,7 +70,7 @@ const CamperDetailsPage = () => {
           </ul>
         </div>
       </div>
-      <Outlet />
+      <Outlet context={{ camper }} />
     </div>
   );
 };

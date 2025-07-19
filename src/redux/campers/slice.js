@@ -13,6 +13,7 @@ const initialState = {
   isLoading: false,
   error: null,
   current: null,
+  hasRequested: false,
 };
 
 const campersSlice = createSlice({
@@ -24,6 +25,7 @@ const campersSlice = createSlice({
       state.page = 1;
       state.total = 0;
       state.error = null;
+      state.notFound = false;
     },
   },
   extraReducers: (builder) => {
@@ -31,10 +33,13 @@ const campersSlice = createSlice({
       .addCase(fetchCampersThunk.pending, (state) => {
         state.isLoading = true;
         state.error = null;
+        state.hasRequested = true;
+        state.notFound = false;
       })
       .addCase(fetchCampersThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
+        state.notFound = !!action.payload.notFound;
         // action.meta.arg.page - це той page, який передаємо
         if (action.meta.arg?.page && action.meta.arg.page > 1) {
           state.items = [...state.items, ...action.payload.items];
@@ -51,11 +56,13 @@ const campersSlice = createSlice({
       })
       .addCase(fetchCampersThunk.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
+        state.notFound = false;
       })
       .addCase(fetchCamperByIdThunk.pending, (state) => {
         state.isLoading = true;
         state.error = null;
+        state.hasRequested = true;
       })
       .addCase(fetchCamperByIdThunk.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -67,7 +74,7 @@ const campersSlice = createSlice({
       })
       .addCase(fetchCamperByIdThunk.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       })
       .addCase(fetchCampersByIdsThunk.fulfilled, (state, action) => {
         state.isLoading = false;

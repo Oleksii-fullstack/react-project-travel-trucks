@@ -1,19 +1,14 @@
 import css from "./CamperGallery.module.css";
 
-const images = [
-  "/src/assets/camp1.jpg",
-  "/src/assets/camp2.jpg",
-  "/src/assets/camp3.jpg",
-  "/src/assets/camp4.jpg",
-];
-
-const CamperGallery = () => {
+const CamperGallery = ({ gallery }) => {
+  if (!gallery || gallery.length === 0)
+    return <div className={css.noGallery}>No images available</div>;
   return (
     <div className={css.gallery}>
-      {images.map((src, i) => (
+      {gallery.map((img, i) => (
         <img
           key={i}
-          src={src}
+          src={img.thumb || img}
           alt={`Camper photo ${i + 1}`}
           className={css.image}
         />
