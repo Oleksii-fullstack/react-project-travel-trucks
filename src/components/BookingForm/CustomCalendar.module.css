@@ -1,8 +1,8 @@
 .customCalendar {
   font-family: "Inter", Arial, sans-serif;
-  border-radius: 16px;
+  /* border-radius: 16px; */
   box-shadow: 0 4px 24px 0 rgba(40, 41, 61, 0.08);
-  border: none;
+  border: 1px solid var(--gray);
   padding: 0;
   background: #fff;
 }
