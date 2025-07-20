@@ -1,7 +1,8 @@
 import { useForm, Controller } from "react-hook-form";
-import DatePicker from "react-datepicker";
 import { toast } from "react-hot-toast";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Loader from "../Loader/Loader";
 import css from "./BookingForm.module.css";
 import calendarCss from "./CustomCalendar.module.css";
 
@@ -152,7 +153,7 @@ const BookingForm = () => {
         />
       </div>
       <button type="submit" className={css.button} disabled={isSubmitting}>
-        {isSubmitting ? "Sending..." : "Send"}
+        {isSubmitting ? <Loader size={20} color="#fff" /> : "Send"}
       </button>
     </form>
   );

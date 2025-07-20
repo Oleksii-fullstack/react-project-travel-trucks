@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { toast } from "react-hot-toast";
+import Loader from "../Loader/Loader";
 import CamperCard from "../CamperCard/CamperCard";
 import css from "./CampersList.module.css";
 
@@ -19,7 +20,7 @@ const CampersList = ({ campers, isLoading, error, hasRequested, notFound }) => {
 
   return (
     <>
-      {isLoading && <h2>Loading...</h2>}
+      {isLoading && <Loader />}
       {!isLoading && error && <div>{error}</div>}
       {!isLoading && !error && notFound && hasRequested && (
         <p>Nothing found by your search. Try to change searching request.</p>

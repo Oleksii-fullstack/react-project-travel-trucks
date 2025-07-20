@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchCamperByIdThunk } from "../redux/campers/operations";
+import Loader from "../components/Loader/Loader";
 import CamperInfo from "../components/CamperInfo/CamperInfo";
 import clsx from "clsx";
 import css from "./CamperDetailsPage.module.css";
@@ -18,12 +19,11 @@ const CamperDetailsPage = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const camper =
-    useSelector((state) => state.campers.cache[id]) ||
-    useSelector((state) => state.campers.current);
-
   const isLoading = useSelector((state) => state.campers.isLoading);
   const error = useSelector((state) => state.campers.error);
+  const camperFromCache = useSelector((state) => state.campers.cache[id]);
+  const camperCurrent = useSelector((state) => state.campers.current);
+  const camper = camperFromCache || camperCurrent;
 
   // Завантажити camper якщо нема в кеші або не той
   useEffect(() => {
@@ -37,7 +37,7 @@ const CamperDetailsPage = () => {
     // eslint-disable-next-line
   }, [id, location.pathname]);
 
-  if (isLoading) return <div className={css.loader}>Loading...</div>;
+  if (isLoading) return <Loader />;
   if (error) return <div className={css.error}>{error}</div>;
   if (!camper) return null; // Поки дані не отримані
 
